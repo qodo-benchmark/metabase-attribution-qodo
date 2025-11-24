@@ -12,7 +12,7 @@
     "Main";
 }
 
-.Container:has(.TopBar):has(.MidBar) {
+.Container:has(.MidBar) {
   display: grid;
   grid-template: auto auto 1fr / 1fr;
   grid-template-areas:
@@ -26,7 +26,7 @@
 }
 
 .TopBar:empty {
-  display: none;
+  display: none !important;
 }
 
 .BackButtonWrapper:empty {
