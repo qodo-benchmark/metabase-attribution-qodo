@@ -26,5 +26,5 @@ export function initializePlugins() {
 
 // "SDK EE-plugins", that are specific to the embedding sdk.
 // These only apply to the SDK, not to the core app
-import "../embedding-sdk-ee/auth";
 import "../embedding-sdk-ee/metabot";
+import "../embedding-sdk-ee/auth";

@@ -9,12 +9,12 @@ import { createDashboard as createDashboardMutation } from "metabase/api/dashboa
 export const createDashboard =
   (reduxStore: SdkStore) =>
   async ({
-    collectionId = "personal",
+    collectionId,
     ...rest
   }: CreateDashboardValues): Promise<MetabaseDashboard> => {
     const realCollectionId = getCollectionIdValueFromReference(
       reduxStore.getState(),
-      collectionId,
+      collectionId ?? "personal",
     );
 
     const action = createDashboardMutation.initiate({

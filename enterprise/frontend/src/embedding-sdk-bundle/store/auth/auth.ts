@@ -42,7 +42,7 @@ export const initAuth = createAsyncThunk(
 );
 
 export const refreshTokenAsync = createAsyncThunk(
-  "sdk/token/REFRESH_TOKEN",
+  "sdk/token/REFRESH_TOKEN_ASYNC",
   async (
     {
       metabaseInstanceUrl,

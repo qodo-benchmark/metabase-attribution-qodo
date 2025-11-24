@@ -73,7 +73,7 @@ export function useSdkUsageProblem({
     dispatch(setUsageProblem(usageProblem));
 
     // Log the problem to the console once.
-    if (!hasLoggedRef.current && allowConsoleLog) {
+    if (!hasLoggedRef.current && allowConsoleLog && usageProblem) {
       printUsageProblemToConsole(usageProblem);
       hasLoggedRef.current = true;
     }

