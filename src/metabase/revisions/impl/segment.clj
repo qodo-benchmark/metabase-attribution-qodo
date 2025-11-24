@@ -28,5 +28,5 @@
                           (m/map-vals (fn [v] {:after v}) (:after base-diff))
                           (m/map-vals (fn [v] {:before v}) (:before base-diff)))
         (or (get-in base-diff [:after :definition])
-            (get-in base-diff [:before :definition])) (assoc :definition {:before (get segment1 :definition)
-                                                                          :after  (get segment2 :definition)})))))
+            (get-in base-diff [:before :definition])) (assoc :definition {:before (:definition segment1)
+                                                                          :after  (:definition segment2)})))))
