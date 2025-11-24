@@ -39,6 +39,8 @@
             (.write pipe (.getBytes "\n" "UTF-8"))
             (.flush pipe)
             (Thread/sleep ^long delay-ms))
+          (catch InterruptedException _
+            nil)
           (finally
             (.close pipe))))
       {:status  200
@@ -49,7 +51,7 @@
   "Execute a StreamingResponse and capture its output"
   [^StreamingResponse streaming-response]
   (let [output-stream (ByteArrayOutputStream.)
-        canceled-chan (a/promise-chan)]
+        canceled-chan (a/chan)]
     ;; Execute the streaming function
     ((.f streaming-response) output-stream canceled-chan)
     (.toString output-stream "UTF-8")))
