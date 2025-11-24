@@ -258,7 +258,7 @@
                         (assoc :additional-options (format "schema=%s" schema))
                         (dissoc :private-key-id)
                         (assoc :private-key-options "uploaded")
-                        (assoc :private-key-value (mt/priv-key->base64-uri (tx/db-test-env-var-or-throw :snowflake :private-key)))
+                        (assoc :private-key-value (tx/db-test-env-var-or-throw :snowflake :private-key))
                         (assoc :use-password false))]
         (sql-jdbc.conn/with-connection-spec-for-testing-connection [spec [:snowflake details]]
           (is (= [{:s schema}] (jdbc/query spec ["select CURRENT_SCHEMA() s"])))
@@ -605,7 +605,7 @@
                 (with-redefs [driver/can-connect? (fn [_ d] (= d (assoc details-to-succeed :engine :snowflake)))]
                   (testing (format "use-password: %s private-key-options: %s uses-secret? %s" use-password options uses-secret?)
                     (spit pk-path pk-key)
-                    (is (= 3 (count all-possible-details)))
+                    (is (= 4 (count all-possible-details)))
                     (t2/update! (t2/table-name :model/Database) (mt/id) {:details (json/encode details)})
                     (testing "Connection succeeds and migration occurs"
                       (log/with-no-logs
@@ -618,7 +618,7 @@
                                 migrating-to (edn/read-string (str/replace (:message (second msgs)) success-re "$1"))
                                 success-keys (set (keys details-to-succeed))
                                 [_ keys-removed _] (data/diff success-keys (set (keys details)))]
-                            (is (=? [{:level :info, :message "Attempting to connect to 3 possible legacy details"}
+                            (is (=? [{:level :info, :message "Attempting to connect to 4 possible legacy details"}
                                      {:level :info, :message success-re}]
                                     msgs))
                             (is (= {:keys success-keys

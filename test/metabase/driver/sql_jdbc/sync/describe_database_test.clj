@@ -196,7 +196,7 @@
              patterns-type-prop pattern)
       (dissoc :private-key-id)
       (assoc :private-key-options "uploaded"
-             :private-key-value (mt/priv-key->base64-uri (tx/db-test-env-var-or-throw :snowflake :private-key))
+             :private-key-value (tx/db-test-env-var-or-throw :snowflake :private-key)
              :use-password false)))
 
 (deftest database-schema-filtering-test
@@ -212,7 +212,7 @@
            {:name    (format "Test %s DB with dataset inclusion filters" driver)
             :engine  driver
             :details (filtered-db-details driver filter-type-prop "inclusion"
-                                          patterns-type-prop "public.s*,public.v*,public.2*")}
+                                          patterns-type-prop "s*,v*,2*")}
            (fn [{schema-name :schema}]
              (testing (format "schema name = %s" (pr-str schema-name))
                (is (contains? #{\s \v \2} (first schema-name)))))))
