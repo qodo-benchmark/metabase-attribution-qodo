@@ -151,11 +151,10 @@ export const downloadQueryResults = createAsyncThunk(
     });
 
     if (opts.type === Urls.exportFormatPng) {
-      dispatch(downloadToImage(true));
-
       const isWhitelabeled = getTokenFeature(getState(), "whitelabel");
       const includeBranding = !isWhitelabeled;
       try {
+        dispatch(downloadToImage(true));
         await downloadChart({ opts, includeBranding });
       } finally {
         dispatch(downloadToImage(false));
@@ -550,7 +549,7 @@ export const getDownloads = (state: State) => state.downloads.datasetRequests;
 export const hasActiveDownloads = (state: State) =>
   state.downloads.datasetRequests.some(
     (download) => download.status === "in-progress",
-  );
+  ) || state.downloads.isDownloadingToImage;
 
 export const getIsDownloadingToImage = (state: State) =>
   state.downloads.isDownloadingToImage;
@@ -564,7 +563,9 @@ const downloads = createSlice({
   name: "metabase/downloads",
   initialState,
   reducers: {
-    clearAll: () => initialState,
+    clearAll: (state) => {
+      state.datasetRequests = [];
+    },
   },
   extraReducers: (builder) => {
     builder
