@@ -132,7 +132,7 @@
   []
   (when-not (nil? (remote-synced-collection))
     (throw (ex-info "Remote-synced collection already exists" {})))
-  (t2/insert-returning-instance! :model/Collection {:name     "Synced Collection"
+  (t2/insert-returning-instance! :model/Collection {:name     "Library"
                                                     :type     remote-synced-collection-type
                                                     :location "/"}))
 

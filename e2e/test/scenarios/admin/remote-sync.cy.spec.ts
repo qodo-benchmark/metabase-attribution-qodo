@@ -474,7 +474,7 @@ H.describeWithSnowplowEE("Remote Sync", () => {
           "exist",
         );
         cy.findByTestId("branch-picker-button").should("contain.text", "main");
-        cy.findByRole("treeitem", { name: /Synced Collection/i }).should(
+        cy.findByRole("treeitem", { name: /library/i }).should(
           "exist",
         );
       });

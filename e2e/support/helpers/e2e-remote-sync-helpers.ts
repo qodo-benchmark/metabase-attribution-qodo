@@ -91,7 +91,7 @@ export const wrapSyncedCollectionFiles = (alias = "syncedCollectionFiles") => {
 // Wraps the synced collection for use in tests
 export const wrapSyncedCollection = (alias = "syncedCollection", n = 0) => {
   if (n > 3) {
-    throw new Error("Could not find Synced Collection");
+    throw new Error("Could not find Library");
   }
 
   cy.request("/api/collection").then(({ body: collections }) => {
@@ -147,7 +147,7 @@ export const moveCollectionItemToSyncedCollection = (name: string) => {
 
   entityPickerModal().within(() => {
     cy.findAllByRole("tab", { name: /Browse|Collections/ }).click();
-    entityPickerModalItem(1, "Synced Collection").click();
+    entityPickerModalItem(1, "Library").click();
     cy.button("Move").click();
   });
 
