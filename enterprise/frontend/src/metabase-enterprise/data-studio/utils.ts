@@ -116,7 +116,7 @@ export const useGetLibraryChildCollectionByType = ({
 // This hook will return the library collection if there are both metrics and models in the library,
 // the library-metrics collection if the library has no models, or the library-models collection
 // if the library has no metrics
-export const useGetResolvedLibraryCollection = ({
+export const useGetResolvedLibraryCollectionLibrary = ({
   skip = false,
 }: { skip?: boolean } = {}) => {
   const { data: libraryCollection, isLoading: isLoadingCollection } =
