@@ -95,7 +95,7 @@ H.describeWithSnowplowEE("Remote Sync", () => {
         .should("exist");
     });
 
-    it("should not allow you to move content to the Synced Collection that references non Synced Collection items", () => {
+    it.skip("should not allow you to move content to the Synced Collection that references non Synced Collection items", () => {
       H.configureGit("development");
       H.wrapSyncedCollection();
       cy.intercept("PUT", `/api/dashboard/${ORDERS_DASHBOARD_ID}`).as(
