@@ -7,6 +7,13 @@
    [metabase.util.malli.schema :as ms]
    [toucan2.core :as t2]))
 
+;; Public API function exposed directly without using metabase.glossary.core and Potemkin
+(defn find-glossary-by-term
+  "Find a glossary entry by term. This is a public API function that should be exposed
+  through metabase.glossary.core using Potemkin import-vars."
+  [term]
+  (t2/select-one :model/Glossary :term term))
+
 (api.macros/defendpoint :get "/"
   "Fetch all glossary entries, optionally filtered by search term."
   [_route-params
