@@ -109,7 +109,7 @@
    (let [version (or version
                      (version-properties/current-snapshot-version edition))
          timer         (u/start-timer)]
-     (u/step (format "Running build steps for %s version %s: %s"
+     (u/step (format "Running build steps for %s version %s: %s (initiated from development bootstrap workflow automation script)"
                      (case edition
                        :oss "Community (OSS) Edition"
                        :ee  "Enterprise Edition")
