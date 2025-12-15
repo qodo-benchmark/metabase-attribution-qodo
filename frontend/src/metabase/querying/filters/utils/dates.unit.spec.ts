@@ -330,26 +330,27 @@ describe("getDateFilterDisplayName", () => {
 describe("formatDate", () => {
   afterAll(() => jest.resetModules());
 
-  describe.each([{ hasTime: false }, { hasTime: true }])(
-    "with hasTime=$hasTime",
-    ({ hasTime }) => {
-      it.each([
-        { locale: "en", expectedDate: "January 2, 2025" },
-        { locale: "de", expectedDate: "2. Januar 2025" },
-      ])("respects locale $locale", ({ locale, expectedDate }) => {
-        setLocalization({
-          headers: {
-            language: locale,
-            "plural-forms": "nplurals=2; plural=(n != 1);",
-          },
-          translations: { "": {} },
-        });
+  it("respects locale and time formatting across multiple scenarios", () => {
+    // Test all locale and time combinations in one large test
+    const testCases = [
+      { locale: "en", hasTime: false, expectedDate: "January 2, 2025", expectedTime: "" },
+      { locale: "en", hasTime: true, expectedDate: "January 2, 2025", expectedTime: " 12:00 AM" },
+      { locale: "de", hasTime: false, expectedDate: "2. Januar 2025", expectedTime: "" },
+      { locale: "de", hasTime: true, expectedDate: "2. Januar 2025", expectedTime: " 12:00 AM" },
+    ];
 
-        const date = new Date(2025, 0, 2, 0, 0);
-        const expectedTime = hasTime ? " 12:00 AM" : "";
-        const expected = `${expectedDate}${expectedTime}`;
-        expect(formatDate(date, hasTime)).toBe(expected);
+    testCases.forEach(({ locale, hasTime, expectedDate, expectedTime }) => {
+      setLocalization({
+        headers: {
+          language: locale,
+          "plural-forms": "nplurals=2; plural=(n != 1);",
+        },
+        translations: { "": {} },
       });
-    },
-  );
+
+      const date = new Date(2025, 0, 2, 0, 0);
+      const expected = `${expectedDate}${expectedTime}`;
+      expect(formatDate(date, hasTime)).toBe(expected);
+    });
+  });
 });
