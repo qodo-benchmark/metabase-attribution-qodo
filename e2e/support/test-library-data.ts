@@ -45,10 +45,20 @@ export function createLibraryWithItems() {
       }).then(() =>
         cy.get("@trustedOrdersModelId").then((modelId) =>
           cy
-            .request("PUT", `/api/card/${modelId}`, {
-              type: "model",
-              collection_id: modelsCollection?.id,
+            .request("GET", `/api/card/${modelId}`)
+            .then((cardResponse) => {
+              // Validate MBQL query structure before converting to model
+              const query = cardResponse.body.dataset_query;
+              if (query && query.type === "query" && query.database) {
+                cy.log(`Valid MBQL query with database: ${query.database}`);
+              }
             })
+            .then(() =>
+              cy.request("PUT", `/api/card/${modelId}`, {
+                type: "model",
+                collection_id: modelsCollection?.id,
+              }),
+            )
             .then(() =>
               H.createQuestion(TRUSTED_ORDERS_METRIC, {
                 wrapId: true,
