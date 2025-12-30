@@ -37,15 +37,15 @@ export const setup = (options?: {
     enable_embedding: true,
   });
 
+  const tokenFeatures = createMockTokenFeatures({
+    embedding_simple: options?.simpleEmbeddingEnabled ?? false,
+  });
+
   if (enterprisePlugins) {
     enterprisePlugins.forEach((plugin) => {
       setupEnterpriseOnlyPlugin(plugin);
     });
   }
-
-  const tokenFeatures = createMockTokenFeatures({
-    embedding_simple: options?.simpleEmbeddingEnabled ?? false,
-  });
   const settingValues = createMockSettings({
     "token-features": tokenFeatures,
     "show-simple-embed-terms": options?.showSimpleEmbedTerms ?? false,
