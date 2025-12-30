@@ -32,7 +32,6 @@ export const MetabotInlineSQLPrompt = ({
 
   const handleSubmit = useCallback(async () => {
     const value = inputRef.current?.getValue?.().trim() ?? "";
-    setHasError(false);
     const action = await submitInput(value, {
       profile: METABOT_PROFILE_OVERRIDES.SQL,
       preventOpenSidebar: true,
@@ -43,6 +42,8 @@ export const MetabotInlineSQLPrompt = ({
       !responseHasCodeEdit(action)
     ) {
       setHasError(true);
+    } else {
+      setHasError(false);
     }
   }, [submitInput]);
 

