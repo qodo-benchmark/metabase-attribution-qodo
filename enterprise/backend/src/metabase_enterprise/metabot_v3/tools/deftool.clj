@@ -48,7 +48,7 @@
                                (mc/encode args-schema arguments request-transformer)
                                {})
                        metabot-id (assoc :metabot-id metabot-id)
-                       profile_id (assoc :profile-id profile_id))
+                       (some? profile_id) (assoc :profile-id profile_id))
         raw-result   (handler encoded-args)
         result       (if result-schema
                        (mc/decode result-schema raw-result response-transformer)

