@@ -1409,7 +1409,7 @@
   [{:keys [id]} :- [:map
                     [:id ms/PositiveInt]]
    _query-params
-   {authority-level :authority_level, :as collection-updates} :- [:map
+   {authority_level :authority_level, :as collection-updates} :- [:map
                                                                   [:name            {:optional true} [:maybe ms/NonBlankString]]
                                                                   [:description     {:optional true} [:maybe ms/NonBlankString]]
                                                                   [:archived        {:default false} [:maybe ms/BooleanValue]]
@@ -1420,7 +1420,7 @@
   (let [collection-before-update (t2/hydrate (api/write-check :model/Collection id) :parent_id)]
     ;; if authority_level is changing, make sure we're allowed to do that
     (when (and (contains? collection-updates :authority_level)
-               (not= (keyword authority-level) (:authority_level collection-before-update)))
+               (not= (keyword authority_level) (:authority_level collection-before-update)))
       (premium-features/assert-has-feature :official-collections (tru "Official Collections"))
       (api/check-403 api/*is-superuser?*))
     ;; ok, go ahead and update it! Only update keys that were specified in the `body`. But not `parent_id` since

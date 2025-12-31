@@ -97,12 +97,15 @@ const EditableText = forwardRef(function EditableText(
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLTextAreaElement>) => {
-      const nextValue = event.currentTarget.value;
+      let nextValue = event.currentTarget.value;
+      if (maxLength && nextValue.length > maxLength) {
+        nextValue = nextValue.slice(0, maxLength);
+      }
       setInputValue(nextValue);
       submitOnBlur.current = true;
       onContentChange?.(nextValue);
     },
-    [onContentChange],
+    [maxLength, onContentChange],
   );
 
   const handleKeyDown = useCallback(

@@ -20,7 +20,7 @@ import type { CollectionPickerItem } from "../types";
 const NEW_COLLECTION_SCHEMA = Yup.object({
   name: Yup.string()
     .required(Errors.required)
-    .max(100, Errors.maxLength)
+    .max(100, Errors.maxLength({ max: 100 }))
     .default(""),
 });
 

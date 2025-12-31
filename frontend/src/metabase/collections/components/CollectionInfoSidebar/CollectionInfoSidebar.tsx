@@ -33,8 +33,10 @@ export const CollectionInfoSidebar = ({
 
   const handleChangeDescription = useCallback(
     (description: string) => {
+      const trimmed = description.trim();
+      const truncated = trimmed.length > 255 ? trimmed.slice(0, 255) : trimmed;
       onUpdateCollection(collection, {
-        description: description.trim() || null,
+        description: truncated || null,
       });
     },
     [collection, onUpdateCollection],
