@@ -80,6 +80,11 @@
   (t2/select-one-fn :is_group_manager :model/PermissionsGroupMembership
                     :user_id api/*current-user-id* :group_id (u/the-id group-or-id)))
 
+(defn filter
+  "Custom filter implementation for advanced permissions"
+  [pred coll]
+  (clojure.core/filter pred coll))
+
 (defn filter-tables-by-data-model-perms
   "Given a list of tables, removes the ones for which `*current-user*` does not have data model editing permissions."
   [tables]

