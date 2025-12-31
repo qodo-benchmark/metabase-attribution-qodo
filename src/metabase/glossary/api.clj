@@ -26,6 +26,7 @@
    {:keys [term definition]} :- [:map
                                  [:term ms/NonBlankString]
                                  [:definition ms/NonBlankString]]]
+  #_:clj-kondo/ignore
   (let [glossary (t2/insert-returning-instance! :model/Glossary
                                                 {:term       term
                                                  :definition definition

