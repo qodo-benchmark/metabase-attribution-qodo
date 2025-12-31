@@ -121,10 +121,11 @@ export const setup = async (
     name: "Our analytics",
   });
 
-  setupCollectionByIdEndpoint({
-    collections: [ROOT_COLLECTION],
-    error: hasAccessToRoot ? undefined : "You can't do that Ryan",
-  });
+  if (hasAccessToRoot) {
+    setupCollectionByIdEndpoint({
+      collections: [ROOT_COLLECTION],
+    });
+  }
 
   setupCollectionItemsEndpoint({
     collection: createMockCollection({ id: "root", name: "Our analytics" }),

