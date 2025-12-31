@@ -27,9 +27,9 @@ H.describeWithSnowplowEE("Remote Sync", () => {
   describe("Development Mode", () => {
     it("can push and pull changes", () => {
       H.configureGit("development");
-      H.wrapSyncedCollection();
       const UPDATED_REMOTE_QUESTION_NAME = "Updated Question Name";
 
+      H.wrapSyncedCollection();
       cy.get("@syncedCollection").then((syncedCollection) => {
         H.createQuestion({
           name: REMOTE_QUESTION_NAME,
