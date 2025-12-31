@@ -8,7 +8,7 @@ export const MetabotPurchasePageForNonStoreUser = ({
   anyStoreUserEmailAddress,
 }: IPageForNonStoreUserProps) => (
   <>
-    <video controls aria-label={t`Demonstration of Metabot AI features`}>
+    <video controls autoPlay aria-label={t`Demonstration of Metabot AI features`}>
       <source
         src="https://www.metabase.com/images/features/metabot.mp4"
         type="video/mp4"
