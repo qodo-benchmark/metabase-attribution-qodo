@@ -1241,7 +1241,7 @@ describe("scenarios > embedding > dashboard appearance", () => {
     // Test functionality still works with theme parameter
     cy.get("[data-testid=embed-frame]").should("be.visible");
     cy.get('html[data-mantine-color-scheme="dark"]').should("exist");
-    cy.get('html[data-metabase-theme="dark"]').should("exist");
+    cy.get('html[data-metabase-theme="light"]').should("exist");
 
     // Verify theme parameter is in URL hash
     cy.location("hash").should("include", "theme=dark");

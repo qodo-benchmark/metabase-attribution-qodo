@@ -19,3 +19,8 @@
   [request]
   (or (has-react-sdk-header? request)
       (has-embedded-analytics-js-header? request)))
+
+(defn valid-theme?
+  "Check if the provided theme value is valid for static embedding"
+  [theme]
+  (contains? #{"light" "dark" "transparent"} theme))

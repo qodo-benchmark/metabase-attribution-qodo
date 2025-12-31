@@ -20,3 +20,13 @@
     (is (embed.util/is-modular-embedding-request? {:headers {"x-metabase-client" "embedding-simple"}})))
   (testing "is-modular-embedding-request? returns false for other client headers"
     (is (not (embed.util/is-modular-embedding-request? {:headers {"x-metabase-client" "embedding-iframe"}})))))
+
+(deftest valid-theme-test
+  (testing "valid-theme? returns true for valid theme values"
+    (is (embed.util/valid-theme? "light"))
+    (is (embed.util/valid-theme? "dark"))
+    (is (embed.util/valid-theme? "transparent")))
+  (testing "valid-theme? returns false for invalid theme values"
+    (is (not (embed.util/valid-theme? "blue")))
+    (is (not (embed.util/valid-theme? "night")))
+    (is (not (embed.util/valid-theme? nil)))))
