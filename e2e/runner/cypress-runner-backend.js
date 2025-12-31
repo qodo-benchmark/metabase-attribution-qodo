@@ -16,7 +16,7 @@ function getJvmOptsFromDepsEdn(alias = "e2e") {
 
 // Ensure that the only two required env vars have values
 process.env.MB_DB_FILE = process.env.MB_DB_FILE || tempDbPath;
-process.env.MB_JETTY_PORT = process.env.MB_JETTY_PORT || 4000;
+process.env.MB_JETTY_PORT = process.env.MB_JETTY_PORT || "4000";
 
 if (!process.CI) {
   // Use a temporary copy of the sample db so it won't use and lock the db used for local development
@@ -55,7 +55,7 @@ const CypressBackend = {
 
       this.server.process = spawn(
         "clojure",
-        [`-M:run:${edition}:dev:dev-start:e2e`, "--hot"],
+        [`-M:run:${edition}:dev:dev-start`, "--hot"],
         {
           env: process.env,
           stdio: process.env.CI ? "ignore" : "inherit",

