@@ -2,13 +2,18 @@ import { t } from "ttag";
 
 import { Text } from "metabase/ui";
 
+import styles from "./MetabotPurchasePage.module.css";
 import type { IPageForNonStoreUserProps } from "./types";
 
 export const MetabotPurchasePageForNonStoreUser = ({
   anyStoreUserEmailAddress,
 }: IPageForNonStoreUserProps) => (
   <>
-    <video controls aria-label={t`Demonstration of Metabot AI features`}>
+    <video
+      className={styles.video}
+      controls
+      aria-label={t`Demonstration of Metabot AI features`}
+    >
       <source
         src="https://www.metabase.com/images/features/metabot.mp4"
         type="video/mp4"

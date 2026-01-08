@@ -21,6 +21,7 @@ import { handleFieldError, isFetchBaseQueryError } from "../utils";
 
 import { MetabotRadios } from "./MetabotRadios";
 import { useAddOnsBilling } from "./hooks";
+import styles from "./MetabotPurchasePage.module.css";
 import type { IMetabotPurchaseFormFields } from "./types";
 
 export const MetabotPurchasePageForStoreUser = () => {
@@ -90,7 +91,11 @@ export const MetabotPurchasePageForStoreUser = () => {
 
   return (
     <>
-      <video controls aria-label={t`Demonstration of Metabot AI features`}>
+      <video
+        className={styles.video}
+        controls
+        aria-label={t`Demonstration of Metabot AI features`}
+      >
         <source
           src="https://www.metabase.com/images/features/metabot.mp4"
           type="video/mp4"

@@ -18,25 +18,36 @@ import { createMockSettingsState } from "metabase-types/store/mocks";
 
 import { MetabotPurchasePage } from ".";
 
-const nonStoreUserPageRegex = /Please ask a Metabase Store Admin/;
-const storeUserPageRegex = /After 14 days of free trial an additional amount/;
 const errorPageRegex = /Error fetching information/;
 const expectNonStoreUserPage = async () => {
-  expect(await screen.findByText(nonStoreUserPageRegex)).toBeVisible();
-  expect(screen.queryByText(storeUserPageRegex)).not.toBeInTheDocument();
+  await screen.findByLabelText(/Demonstration of Metabot AI features/);
+  expect(
+    screen.queryByRole("checkbox", { name: /Terms of Service/i }),
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("button", { name: /Confirm purchase/i }),
+  ).not.toBeInTheDocument();
   expect(screen.queryByText(errorPageRegex)).not.toBeInTheDocument();
 };
 
 const expectStoreUserPage = async () => {
-  expect(screen.queryByText(nonStoreUserPageRegex)).not.toBeInTheDocument();
-  expect(await screen.findByText(storeUserPageRegex)).toBeVisible();
+  expect(
+    await screen.findByRole("checkbox", { name: /Terms of Service/i }),
+  ).toBeVisible();
+  expect(
+    screen.getByRole("button", { name: /Confirm purchase/i }),
+  ).toBeVisible();
   expect(screen.queryByText(errorPageRegex)).not.toBeInTheDocument();
 };
 
 const expectErrorPage = async () => {
-  expect(screen.queryByText(nonStoreUserPageRegex)).not.toBeInTheDocument();
-  expect(screen.queryByText(storeUserPageRegex)).not.toBeInTheDocument();
   expect(await screen.findByText(errorPageRegex)).toBeVisible();
+  expect(
+    screen.queryByRole("checkbox", { name: /Terms of Service/i }),
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("button", { name: /Confirm purchase/i }),
+  ).not.toBeInTheDocument();
 };
 
 const setupRefreshableProperties = ({
