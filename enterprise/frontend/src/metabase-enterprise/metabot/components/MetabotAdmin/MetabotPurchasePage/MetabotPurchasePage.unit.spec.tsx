@@ -18,38 +18,36 @@ import { createMockSettingsState } from "metabase-types/store/mocks";
 
 import { MetabotPurchasePage } from ".";
 
+const errorPageRegex = /Error fetching information/;
 const expectNonStoreUserPage = async () => {
+  await screen.findByLabelText(/Demonstration of Metabot AI features/);
   expect(
-    await screen.findByText(/Please ask a Metabase Store Admin/),
-  ).toBeVisible();
-  expect(
-    screen.queryByText(/Additional amount for the add-on/),
+    screen.queryByRole("checkbox", { name: /Terms of Service/i }),
   ).not.toBeInTheDocument();
   expect(
-    screen.queryByText(/Error fetching information/),
+    screen.queryByRole("button", { name: /Confirm purchase/i }),
   ).not.toBeInTheDocument();
+  expect(screen.queryByText(errorPageRegex)).not.toBeInTheDocument();
 };
 
 const expectStoreUserPage = async () => {
   expect(
-    screen.queryByText(/Please ask a Metabase Store Admin/),
-  ).not.toBeInTheDocument();
-  expect(
-    await screen.findByText(/Additional amount for the add-on/),
+    await screen.findByRole("checkbox", { name: /Terms of Service/i }),
   ).toBeVisible();
   expect(
-    screen.queryByText(/Error fetching information/),
-  ).not.toBeInTheDocument();
+    screen.getByRole("button", { name: /Confirm purchase/i }),
+  ).toBeVisible();
+  expect(screen.queryByText(errorPageRegex)).not.toBeInTheDocument();
 };
 
 const expectErrorPage = async () => {
+  expect(await screen.findByText(errorPageRegex)).toBeVisible();
   expect(
-    screen.queryByText(/Please ask a Metabase Store Admin/),
+    screen.queryByRole("checkbox", { name: /Terms of Service/i }),
   ).not.toBeInTheDocument();
   expect(
-    screen.queryByText(/Additional amount for the add-on/),
+    screen.queryByRole("button", { name: /Confirm purchase/i }),
   ).not.toBeInTheDocument();
-  expect(await screen.findByText(/Error fetching information/)).toBeVisible();
 };
 
 const setupRefreshableProperties = ({
