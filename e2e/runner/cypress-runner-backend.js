@@ -10,6 +10,9 @@ const { waitUntilReady, shell } = require("./cypress-runner-utils");
 const tempDbPath = path.join(os.tmpdir(), `metabase-test-${process.pid}.db`);
 
 function getJvmOptsFromDepsEdn(alias = "e2e") {
+  if (!/^[a-z0-9-]+$/i.test(alias)) {
+    throw new Error(`Invalid deps.edn alias: ${alias}`);
+  }
   const cmd = `clojure -Sdeps '{:deps {}}' -M -e '(->> (-> "deps.edn" slurp clojure.edn/read-string :aliases :${alias} :jvm-opts) (clojure.string/join " ") println)'`;
   return execSync(cmd, { encoding: "utf8" }).trim().toString();
 }
