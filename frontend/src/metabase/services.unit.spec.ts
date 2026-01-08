@@ -217,6 +217,10 @@ describe("DashboardApi parameter endpoints with IS_EMBED_PREVIEW", () => {
     );
   });
 
+  afterEach(() => {
+    isEmbedPreviewMock.mockRestore();
+  });
+
   it("should use /api/embed prefix when IS_EMBED_PREVIEW is false", async () => {
     isEmbedPreviewMock.mockReturnValue(false);
 

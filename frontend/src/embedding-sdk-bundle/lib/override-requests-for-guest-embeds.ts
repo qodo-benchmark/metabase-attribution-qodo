@@ -29,43 +29,47 @@ const URL_PATTERNS = {
  * Mapping of API endpoints to their Guest Embed equivalents.
  * Each transformation specifies the embed URL and HTTP method to use.
  */
-const EMBED_URL_TRANSFORMATIONS: Record<
+const getEmbedUrlTransformations = (): Record<
   string,
   { url: string; method: "GET" | "POST" }
-> = {
-  [URL_PATTERNS.CARD_QUERY]: {
-    url: `${getEmbedBase()}/card/:token/query`,
-    method: "GET",
-  },
-  [URL_PATTERNS.CARD_PIVOT_QUERY]: {
-    url: `${getEmbedBase()}/pivot/card/:token/query`,
-    method: "GET",
-  },
-  [URL_PATTERNS.CARD_PARAMETER_VALUES]: {
-    url: `${getEmbedBase()}/card/:token/params/:paramId/values`,
-    method: "GET",
-  },
-  [URL_PATTERNS.CARD_PARAMETER_SEARCH]: {
-    url: `${getEmbedBase()}/card/:token/params/:paramId/search/:query`,
-    method: "GET",
-  },
-  [URL_PATTERNS.CARD_PARAMETER_REMAPPING]: {
-    url: `${getEmbedBase()}/card/:token/params/:paramId/remapping`,
-    method: "GET",
-  },
-  [URL_PATTERNS.DASHBOARD_PARAMETER_VALUES]: {
-    url: `${getEmbedBase()}/dashboard/:token/params/:paramId/values`,
-    method: "GET",
-  },
-  [URL_PATTERNS.DASHBOARD_PARAMETER_SEARCH]: {
-    url: `${getEmbedBase()}/dashboard/:token/params/:paramId/search/:query`,
-    method: "GET",
-  },
-  [URL_PATTERNS.DASHBOARD_PARAMETER_REMAPPING]: {
-    url: `${getEmbedBase()}/dashboard/:token/params/:paramId/remapping`,
-    method: "GET",
-  },
-} as const;
+> => {
+  const base = getEmbedBase();
+
+  return {
+    [URL_PATTERNS.CARD_QUERY]: {
+      url: `${base}/card/:token/query`,
+      method: "GET",
+    },
+    [URL_PATTERNS.CARD_PIVOT_QUERY]: {
+      url: `${base}/pivot/card/:token/query`,
+      method: "GET",
+    },
+    [URL_PATTERNS.CARD_PARAMETER_VALUES]: {
+      url: `${base}/card/:token/params/:paramId/values`,
+      method: "GET",
+    },
+    [URL_PATTERNS.CARD_PARAMETER_SEARCH]: {
+      url: `${base}/card/:token/params/:paramId/search/:query`,
+      method: "GET",
+    },
+    [URL_PATTERNS.CARD_PARAMETER_REMAPPING]: {
+      url: `${base}/card/:token/params/:paramId/remapping`,
+      method: "GET",
+    },
+    [URL_PATTERNS.DASHBOARD_PARAMETER_VALUES]: {
+      url: `${base}/dashboard/:token/params/:paramId/values`,
+      method: "GET",
+    },
+    [URL_PATTERNS.DASHBOARD_PARAMETER_SEARCH]: {
+      url: `${base}/dashboard/:token/params/:paramId/search/:query`,
+      method: "GET",
+    },
+    [URL_PATTERNS.DASHBOARD_PARAMETER_REMAPPING]: {
+      url: `${base}/dashboard/:token/params/:paramId/remapping`,
+      method: "GET",
+    },
+  } as const;
+};
 
 type RequestData = {
   method: "GET" | "POST";
@@ -131,7 +135,7 @@ function getRequestTransformation({
   }
 
   // Apply the transformation for this pattern
-  const transformation = EMBED_URL_TRANSFORMATIONS[matchedPattern];
+  const transformation = getEmbedUrlTransformations()[matchedPattern];
   if (!transformation) {
     return { method, url, options };
   }
@@ -149,8 +153,10 @@ function getRequestTransformation({
  * Replaces the standard API base path with the embed API base path.
  */
 function replaceWithEmbedBase(url: string): string {
-  if (url.includes(internalBase) && !url.includes(getEmbedBase())) {
-    return url.replace(internalBase, getEmbedBase());
+  const embedBase = getEmbedBase();
+
+  if (url.includes(internalBase) && !url.includes(embedBase)) {
+    return url.replace(internalBase, embedBase);
   }
   return url;
 }
