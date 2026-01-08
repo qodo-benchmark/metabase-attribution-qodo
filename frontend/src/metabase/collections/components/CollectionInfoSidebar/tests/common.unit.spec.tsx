@@ -71,6 +71,8 @@ describe("CollectionInfoSidebar (OSS)", () => {
     await userEvent.type(input, longDescription);
     await userEvent.tab();
 
-    expect(input).toHaveValue(longDescription.slice(0, 255));
+    expect(
+      screen.getByText(longDescription.slice(0, 255)),
+    ).toBeInTheDocument();
   });
 });
